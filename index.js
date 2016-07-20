@@ -21,6 +21,8 @@ var bunyan = require('bunyan');
 var path = require('path');
 var fs = require('fs');
 var os = require('os');
+var util = require('util');
+var colors = require('colors');
 
 /**
  * create logger instance with the specified name.
@@ -56,8 +58,8 @@ exports.createLogger = function(name, options) {
     name: name,
     streams: [
       {
-        level: options.consoleLevel || 'info',
-        stream: process.stdout
+        level: options.consoleLevel || 'error',
+        stream: consoleStream
       },
       {
         level: options.fileLevel || 'info',
@@ -67,3 +69,32 @@ exports.createLogger = function(name, options) {
   });
   return logger;
 };
+
+var levelIndex = {
+  60: 'FATAL',
+  50: 'ERROR',
+  40: ' WARN',
+  30: ' INFO',
+  20: 'DEBUG',
+  10: 'TRACE'
+};
+
+var colorIndex = {
+  60: colors.red,
+  50: colors.red,
+  40: colors.yellow,
+  30: colors.blue,
+  20: colors.green,
+  10: colors.gray 
+};
+
+var consoleStream = {
+  write: writeToStdOut
+};
+
+function writeToStdOut(data) {
+  var obj = JSON.parse(data);
+  var msg = util.format('%s: %s', 
+    colorIndex[obj.level](levelIndex[obj.level]), obj.msg);
+  console.log(msg);
+}

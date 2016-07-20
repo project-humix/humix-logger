@@ -1,6 +1,6 @@
 {
   "name": "humix-logger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A utility module to create logger instance for humix projects",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/project-humix/humix-logger#readme",
   "dependencies": {
-    "bunyan": "^1.8.1"
+    "bunyan": "^1.8.1",
+    "colors": "^1.1.2"
   }
 }
