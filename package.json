@@ -1,6 +1,6 @@
 {
   "name": "humix-logger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A utility module to create logger instance for humix projects",
   "main": "index.js",
   "scripts": {

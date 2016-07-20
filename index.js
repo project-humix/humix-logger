@@ -36,8 +36,15 @@ var os = require('os');
 exports.createLogger = function(name, options) {
   options = options || {};
   var dir = path.resolve(os.homedir(), '.humix');
-  var stats = fs.statSync(dir);
-  if (!stats.isDirectory()) {
+
+  try {
+    var stats = fs.statSync(dir);
+    if (!stats.isDirectory()) {
+      console.error('unable to create .humix in home directory:',
+          '.humix already exists');
+      return;
+    }
+  } catch (e) {
     try {
       fs.mkdirSync(dir);
     } catch (e) {
