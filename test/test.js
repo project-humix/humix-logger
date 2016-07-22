@@ -1,4 +1,4 @@
-var logger = require('../index').createLogger('logger', { consoleLevel: 'trace'});
+var logger = require('../index').createLogger('logger', { consoleLevel: 'trace', filename: 'test.log'});
 
 
 logger.fatal('fatal');

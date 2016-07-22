@@ -54,6 +54,7 @@ exports.createLogger = function(name, options) {
       return;
     }
   }
+  var filename = options.filename || (name + '.log');
   var logger = bunyan.createLogger({
     name: name,
     streams: [
@@ -63,7 +64,7 @@ exports.createLogger = function(name, options) {
       },
       {
         level: options.fileLevel || 'info',
-        path: path.resolve(dir, name + '.log')
+        path: path.resolve(dir, filename)
       }
     ]
   });
