@@ -12,7 +12,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-* 
+*
 * Node module: humix-logger
 *******************************************************************************/
 'use strict';
@@ -58,7 +58,7 @@ exports.createLogger = function(name, options) {
     name: name,
     streams: [
       {
-        level: options.consoleLevel || 'error',
+        level: options.consoleLevel || 'info',
         stream: consoleStream
       },
       {
@@ -83,9 +83,9 @@ var colorIndex = {
   60: colors.red,
   50: colors.red,
   40: colors.yellow,
-  30: colors.blue,
+  30: colors.cyan,
   20: colors.green,
-  10: colors.gray 
+  10: colors.gray
 };
 
 var consoleStream = {
@@ -94,7 +94,11 @@ var consoleStream = {
 
 function writeToStdOut(data) {
   var obj = JSON.parse(data);
-  var msg = util.format('%s: %s', 
-    colorIndex[obj.level](levelIndex[obj.level]), obj.msg);
+  var name = obj.name;
+  if (obj.loc) {
+    name = name+'/'+obj.loc;
+  }
+  var msg = util.format('%s [%s] %s: %s', obj.time,
+    colorIndex[obj.level](levelIndex[obj.level]), name, obj.msg);
   console.log(msg);
 }
