@@ -32,8 +32,9 @@ var colors = require('colors');
  * @param name used for the logger file name
  * @param options this is optional and support the following
  *        options:
- *        - fileLevel: specify the log level of logger file
- *        - consoleLevel: specify the log level of console
+ *        - fileLevel: specify the log level of logger file, default is INFO
+ *        - filename: specify the log file name, default is <name>.log
+ *        - consoleLevel: specify the log level of console, default is INFO
  */
 exports.createLogger = function(name, options) {
   options = options || {};
@@ -70,6 +71,19 @@ exports.createLogger = function(name, options) {
   });
   return logger;
 };
+
+exports.createConsoleLogger = function(name) {
+  var logger = bunyan.createLogger({
+    name: name,
+    streams: [
+      {
+        level: options.consoleLevel || 'info',
+        stream: consoleStream
+      }
+    ]
+  });
+  return logger;
+}
 
 var levelIndex = {
   60: 'FATAL',
