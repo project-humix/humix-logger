@@ -72,12 +72,17 @@ exports.createLogger = function(name, options) {
   return logger;
 };
 
-exports.createConsoleLogger = function(name) {
+/**
+ * create a console logger instance with the specified name.
+ * @param name used for the logger file name
+ * @param level message level
+ */
+exports.createConsoleLogger = function(name, level) {
   var logger = bunyan.createLogger({
     name: name,
     streams: [
       {
-        level: options.consoleLevel || 'info',
+        level: level || 'info',
         stream: consoleStream
       }
     ]
