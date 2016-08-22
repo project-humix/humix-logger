@@ -115,10 +115,11 @@ var consoleStream = {
 function writeToStdOut(data) {
   var obj = JSON.parse(data);
   var name = obj.name;
-  if (obj.loc) {
-    name = name+'/'+obj.loc;
+  var child = obj.component || obj.loc || undefined;
+  if (child) {
+    name = name+'/'+child;
   }
-  var msg = util.format('%s [%s] %s: %s', obj.time,
-    colorIndex[obj.level](levelIndex[obj.level]), name, obj.msg);
+  var msg = util.format('%s [%s] [%s] %s - %s', obj.time,
+    colorIndex[obj.level](levelIndex[obj.level]),  obj.pid, name, obj.msg);
   console.log(msg);
 }
